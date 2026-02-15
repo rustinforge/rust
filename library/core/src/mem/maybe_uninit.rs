@@ -695,6 +695,16 @@ impl<T> MaybeUninit<T> {
     /// let x_init = unsafe { x.assume_init() };
     /// // `x` had not been initialized yet, so this last line caused undefined behavior. ⚠️
     /// ```
+    ///
+    /// *Incorrect* usage of this method:
+    ///
+    /// ```rust,no_run
+    /// use std::mem::MaybeUninit;
+    ///
+    /// let x = MaybeUninit::<u8>::uninit();
+    /// let x_init = unsafe { x.assume_init() };
+    /// // `x` was not initialized, reading uninitialized integer is undefined behavior! ⚠️
+    /// ```
     #[stable(feature = "maybe_uninit", since = "1.36.0")]
     #[rustc_const_stable(feature = "const_maybe_uninit_assume_init_by_value", since = "1.59.0")]
     #[inline(always)]
